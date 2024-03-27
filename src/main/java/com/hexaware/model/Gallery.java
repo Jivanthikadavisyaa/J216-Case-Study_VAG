@@ -135,4 +135,9 @@ public class Gallery {
         this.OpeningHours = OpeningHours;
     }
 
+    public String toString() {
+        return "Gallery [GalleryID=" + GalleryID + ", Name=" + Name + ", Description=" + Description + ", Location="
+                + Location + ", Curator=" + Curator + ", OpeningHours=" + OpeningHours + "]";
+    }
+
 }
