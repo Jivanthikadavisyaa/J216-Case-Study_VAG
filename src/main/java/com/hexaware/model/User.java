@@ -191,5 +191,10 @@ public class User {
     public void setFavouriteArtworks(String FavouriteArtworks) {
         this.FavouriteArtworks = FavouriteArtworks;
     }
+     public String toString() {
+        return "User [UserID=" + UserID + ", UserName=" + UserName + ", Password=" + Password + ", Email=" + Email
+                + ", FirstName=" + FirstName + ", LastName=" + LastName + ", DateOfBirth=" + DateOfBirth
+                + ", ProfilePicture=" + ProfilePicture + ", FavouriteArtworks=" + FavouriteArtworks + "]";
+    }
 }
 
