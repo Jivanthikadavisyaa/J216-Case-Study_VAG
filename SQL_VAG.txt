@@ -1,0 +1,130 @@
+create database virtualartgallery;
+use virtualartgallery;
+
+
+
+drop database virtualartgallery;
+
+CREATE TABLE Artwork (
+    ArtworkID INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Description TEXT,
+    CreationDate DATE,
+    Medium VARCHAR(100),
+    ImageURL VARCHAR(255)
+    
+);
+
+CREATE TABLE Artist (
+    ArtistID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Biography TEXT,
+    BirthDate DATE,
+    Nationality VARCHAR(100),
+    Website VARCHAR(255),
+    ContactInformation VARCHAR(255)
+);
+
+CREATE TABLE User (
+    UserID INT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE,
+    Password VARCHAR(255), 
+    Email VARCHAR(100) UNIQUE,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    DateOfBirth DATE,
+    ProfilePicture VARCHAR(255)
+);
+
+CREATE TABLE Gallery (
+    GalleryID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Description TEXT,
+    Location VARCHAR(255),
+    Curator INT, 
+    OpeningHours VARCHAR(255),
+    FOREIGN KEY (Curator) REFERENCES Artist(ArtistID)
+);
+
+CREATE TABLE User_Favorite_Artwork (
+    UserID INT,
+    ArtworkID INT,
+    PRIMARY KEY (UserID, ArtworkID),
+    FOREIGN KEY (UserID) REFERENCES User(UserID),
+    FOREIGN KEY (ArtworkID) REFERENCES Artwork(ArtworkID)
+);
+
+CREATE TABLE Artist_Gallery (
+    ArtistID INT,
+    GalleryID INT,
+    PRIMARY KEY (ArtistID, GalleryID),
+    FOREIGN KEY (ArtistID) REFERENCES Artist(ArtistID),
+    FOREIGN KEY (GalleryID) REFERENCES Gallery(GalleryID)
+);
+
+CREATE TABLE Artwork_Gallery (
+    ArtworkID INT,
+    GalleryID INT,
+    PRIMARY KEY (ArtworkID, GalleryID),
+    FOREIGN KEY (ArtworkID) REFERENCES Artwork(ArtworkID),
+    FOREIGN KEY (GalleryID) REFERENCES Gallery(GalleryID)
+);
+
+
+
+
+
+INSERT INTO Artwork (ArtworkID, Title, Description, CreationDate, Medium, ImageURL)
+VALUES
+(1, 'Starry Night', 'A famous painting by Vincent van Gogh', '1889-06-01', 'Oil on canvas', 'starry_night.jpg'),
+(2, 'Mona Lisa', 'A portrait painting by Leonardo da Vinci', '1503-01-01', 'Oil on poplar panel', 'mona_lisa.jpg'),
+(3, 'The Persistence of Memory', 'A surrealist painting by Salvador Dalí', '1931-01-01', 'Oil on canvas', 'persistence_of_memory.jpg');
+select * from artwork;
+
+INSERT INTO Artist (ArtistID, Name, Biography, BirthDate, Nationality, Website, ContactInformation)
+VALUES
+(1, 'Vincent van Gogh', 'Dutch post-impressionist painter', '1853-03-30', 'Dutch', 'http://www.vangoghgallery.com/', 'contact@vangoghgallery.com'),
+(2, 'Leonardo da Vinci', 'Italian polymath', '1452-04-15', 'Italian', 'http://www.leonardodavinci.net/', 'contact@leonardodavinci.net'),
+(3, 'Salvador Dalí', 'Spanish surrealist artist', '1904-05-11', 'Spanish', 'http://www.salvadordali.com/', 'contact@salvadordali.com');
+
+
+INSERT INTO User (UserID, Username, Password, Email, FirstName, LastName, DateOfBirth, ProfilePicture)
+VALUES
+(1, 'user1', 'password1', 'user1@example.com', 'John', 'Doe', '1990-01-01', 'profile_picture1.jpg'),
+(2, 'user2', 'password2', 'user2@example.com', 'Jane', 'Smith', '1985-03-15', 'profile_picture2.jpg'),
+(3, 'user3', 'password3', 'user3@example.com', 'Alice', 'Johnson', '1995-07-20', 'profile_picture3.jpg');
+
+
+INSERT INTO Gallery (GalleryID, Name, Description, Location, Curator, OpeningHours)
+VALUES
+(1, 'Museum of Modern Art', 'A museum dedicated to modern and contemporary art', '11 W 53rd St, New York, NY', 1, '9:30 AM - 5:30 PM'),
+(2, 'Louvre Museum', 'A historic monument and a central landmark of Paris', 'Rue de Rivoli, Paris, France', 2, '9:00 AM - 6:00 PM'),
+(3, 'Tate Modern', 'A modern art gallery located in London', 'Bankside, London, UK', 3, '10:00 AM - 6:00 PM');
+
+
+INSERT INTO User_Favorite_Artwork (UserID, ArtworkID)
+VALUES
+(1, 1),
+(1, 2),
+(2, 2);
+select * from User_Favorite_Artwork;
+
+INSERT INTO Artist_Gallery (ArtistID, GalleryID)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+
+INSERT INTO Artwork_Gallery (ArtworkID, GalleryID)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+select * from user;
+
+
+
+select * from User_Favorite_Artwork;
+
+select * from artwork;
