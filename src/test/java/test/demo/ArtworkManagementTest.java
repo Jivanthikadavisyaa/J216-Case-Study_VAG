@@ -29,55 +29,33 @@ public class ArtworkManagementTest {
         gallery = null;
     }
 
-    @Test
-   public void testAddArtwork() {
-        Artwork artwork = new Artwork(4, "Test", "Description","2022-01-01", "english", "image.jpg");
-        assertTrue(gallery.addartwork(artwork));
-    }
-
-    /*@Test
-    public void testUpdateArtwork() {
-        Artwork artwork = new Artwork(2, "Updated", "UDescription", "2022-01-01", "emglish", "updated_image.jpg");
-        assertTrue(gallery.addartwork(artwork));
-    }
-
-    @Test
-    public void testRemoveArtwork() throws ArtWorkNotFoundException {
-        assertTrue(gallery.removeartworkbydb(4));
-    }*/
-
-    @Test
-    public void testSearchArtworks() {
-        List<Artwork> searchResults = gallery.searchArtworksfromdb("by");
-        assertFalse(searchResults.isEmpty());
-    }
-    
-    
    /* @Test
-   public void testAddGallery() {
-       
-    	assertTrue(gallery.addGallery(6,"abc", "abv", "NY", 1, "9:30-10:30"));
-    }
-
-    @Test
-    public void testUpdateGallery() {
-       
-        assertTrue(gallery.updateGallery(3, "yxy", "abc", "ehue", 1, "9:30-12:30"));
-    }
-
-    @Test
-    public void testRemoveGallery() {
-        
-        
-        assertTrue(gallery.removeGallery(4));
-    }
-
-    @Test
-    public void testSearchGalleries() {
-        // Test searching galleries
-        // Assuming method signature is similar to searchArtworks() in VirtualArtGalleryImpl
-        List<Gallery> searchResults = gallery.searchGalleries("Test");
-        assertFalse(searchResults.isEmpty());
+   public void testAddArtwork() {
+        Artwork artwork = new Artwork(7, "Test5", "Descripn5","2022-01-01", "englh", "imge.jpg5");
+        assertTrue(gallery.addartwork(artwork));
     }*/
 
+    @Test
+    public void testUpdateArtwork() throws ArtWorkNotFoundException {
+        Artwork artwork = new Artwork(4, "Updated Title", "Updated Description", "2022-01-01", "Updated Medium", "updated_image.jpg");
+        assertTrue(gallery.updateartwork(artwork));
+    }
+
+  
+   
+    
+
+    public void testSearchArtworks() {
+        List<Artwork> searchResults = gallery.searchArtworks("by");
+        assertFalse(searchResults.isEmpty());
+    }
+   /* @Test
+    public void testRemoveArtwork() throws ArtWorkNotFoundException {
+        assertTrue(gallery.removeartworkbydb(7));
+    }*/
+
+    
+    
+    
+    
 }

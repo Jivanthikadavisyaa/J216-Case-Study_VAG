@@ -156,10 +156,4 @@ public class Artist {
         this.ContactInformation = ContactInformation;
     }
 
-     public String toString() {
-        return "Artist [ArtistID=" + ArtistID + ", Name=" + Name + ", Biography=" + Biography + ", BirthDate="
-                + BirthDate + ", Nationality=" + Nationality + ", Website=" + Website + ", ContactInformation="
-                + ContactInformation + "]";
-    }
-
 }

@@ -10,10 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hexaware.dao.ImplementationVirtualArtGallery;
-import com.hexaware.model.Artwork;
+
 import com.hexaware.model.Gallery;
-import com.hexaware.exception.ArtWorkNotFoundException;
-import com.hexaware.exception.UserNotFoundException;
 
 /**
  * Test class for Gallery management operations.
@@ -45,33 +43,32 @@ public class GalleryManagementTest {
      */
     @Test
     public void testAddGallery() {
-     	//assertTrue(gallery.addGallery(6,"abc", "abv", "NY", 1, "9:30-10:30"));
+        boolean result = gallery.addGallery(4, "Gallery1", "Description1", "Location1", 1, "9am-5pm");
+        assertTrue(result);
     }
 
-    /**
-     * Test updating an existing gallery.
-     */
     @Test
     public void testUpdateGallery() {
-        //assertTrue(gallery.updateGallery(3, "yxy", "abc", "ehue", 1, "9
+        boolean result = gallery.updateGallery(1, "Updated Gallery", "Updated Description", "Updated Location", 2, "10am-6pm");
+        assertTrue(result);
     }
-    @Test
-    public void testRemoveGallery() {
-        
-        
-        assertTrue(gallery.removeGallery(4));
-    }
+
 
     @Test
     public void testSearchGalleries() {
-        // Test searching galleries
-        // Assuming method signature is similar to searchArtworks() in VirtualArtGalleryImpl
-        List<Gallery> searchResults = gallery.searchGalleries("Test");
-        assertFalse(searchResults.isEmpty());
-    }*/
+        List<Gallery> galleries = gallery.searchGalleries("Gallery");
+        assertFalse(galleries.isEmpty());
+    }
+    
+
+    @Test
+    public void testRemoveGallery() {
+        boolean result = gallery.removeGallery(4);
+        assertTrue(result);
+    }
+
+    
+    
 }
-    
-    
-    
     
     

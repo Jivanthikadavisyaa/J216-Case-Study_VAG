@@ -36,21 +36,7 @@ public class ImplementationVirtualArtGallery implements IVirtualArtGallery {
 	public boolean addartwork(Artwork art) {
 	    try {
 	        con = DbConnUtil.getDBConn();
-	        
-	     
-	        System.out.println("Enter Artwork ID:");
-            art.setArtworkID(sc.nextInt());
-            System.out.println("Enter  Title:");
-            art.setTitle(sc.next());
-            System.out.println("Enter Description:");
-            art.setDescription(sc.next());
-            System.out.println("Enter Creationdate:");
-            art.setCreationDate(sc.next());
-            System.out.println("Enter Medium:");
-            art.setMedium(sc.next());
-            System.out.println("Enter Image URL:");
-            art.setImageUrl(sc.next());
-            
+	              
 	        ps = con.prepareStatement("insert into artwork (artworkid,title,description,creationdate,medium,imageurl) VALUES (?,?, ?, ?, ?,?)");
 	        ps.setInt(1, art.getArtworkID());
 	        ps.setString(2, art.getTitle());
@@ -63,7 +49,7 @@ public class ImplementationVirtualArtGallery implements IVirtualArtGallery {
 	        
 	        int rowsAffected = ps.executeUpdate();
 	        if (rowsAffected > 0) {
-	            System.out.println("Added");
+	           
 	            return true;
 	        } 
 	    } catch (Exception e) {
@@ -80,35 +66,23 @@ public class ImplementationVirtualArtGallery implements IVirtualArtGallery {
      * @throws ArtWorkNotFoundException if the artwork is not found in the database
      */
 
-	public boolean updateartwork(Artwork art) throws ArtWorkNotFoundException {
+	public boolean updateartwork(Artwork arts) throws ArtWorkNotFoundException {
 		 try {
 		        con = DbConnUtil.getDBConn();
-		        System.out.println("Enter Artwork ID:");
-	            art.setArtworkID(sc.nextInt());
-	            System.out.println("Enter new Title:");
-	            art.setTitle(sc.next());
-	            System.out.println("Enter new Description:");
-	            art.setDescription(sc.next());
-	            System.out.println("Enter new Creationdate:");
-	            art.setCreationDate(sc.next());
-	            System.out.println("Enter new Medium:");
-	            art.setMedium(sc.next());
-	            System.out.println("Enter Image URL:");
-	            art.setImageUrl(sc.next());
-		       
+		      
 		        
 		        ps = con.prepareStatement("UPDATE artwork SET title = ?, description = ?, medium = ?, imageurl=? WHERE artworkid = ?");
-		        ps.setString(1, art.getTitle());
-		        ps.setString(2, art.getDescription());
-		        ps.setString(3, art.getMedium());
-		        ps.setString(4, art.getImageUrl()); 
-		        ps.setInt(5, art.getArtworkID());
+		        ps.setString(1, arts.getTitle());
+		        ps.setString(2, arts.getDescription());
+		        ps.setString(3, arts.getMedium());
+		        ps.setString(4, arts.getImageUrl()); 
+		        ps.setInt(5, arts.getArtworkID());
 		        int rowsUpdated = ps.executeUpdate();
 		        if (rowsUpdated > 0) {
-		            System.out.println("Artwork updated successfully");
+		            
 		            return true;
 		        } else {
-		           throw new ArtWorkNotFoundException("ARtwork Not Found");
+		           throw new ArtWorkNotFoundException("Artwork Not Found");
 		        }
 		    } catch (SQLException e) {
 		        e.printStackTrace();
@@ -328,113 +302,115 @@ public class ImplementationVirtualArtGallery implements IVirtualArtGallery {
 	
 	
 	
-	public List<Artwork> searchArtworks() {
-		
-		String s=sc.nextLine();
-		return searchArtworksfromdb(s);
-	}
-
-
-	public List<Artwork> searchArtworksfromdb(String keyword) {
-	    List<Artwork> searchResults = new ArrayList<>();
-	    try {
-	        con = DbConnUtil.getDBConn();
-	        ps = con.prepareStatement("SELECT * FROM artwork WHERE title LIKE ? OR description LIKE ?");
-	        ps.setString(1, "%" + keyword + "%");
-	        ps.setString(2, "%" + keyword + "%");
-	        ResultSet rs = ps.executeQuery();
-	        while (rs.next()) {
-	            Artwork art = new Artwork();
-	            art.setArtworkID(rs.getInt("artworkid"));
-	            art.setTitle(rs.getString("title"));
-	            art.setDescription(rs.getString("description"));
-	            art.setCreationDate(rs.getString("creationdate"));
-	            art.setMedium(rs.getString("medium"));
-	            art.setImageUrl(rs.getString("imageurl"));
-                searchResults.add(art);
-	                      
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } 
-	    return searchResults;
-	}
-
-	
-	
-
-	 public boolean addGallery(int galleryid, String name, String description, String location, int curator, String openingHours) {
-	        try (Connection conn = DbConnUtil.getDBConn();
-	             PreparedStatement ps = conn.prepareStatement("INSERT INTO Gallery (Name, Description, Location, Curator, OpeningHours) VALUES (?, ?, ?, ?, ?)")) {
-	            ps.setString(1, name);
-	            ps.setString(2, description);
-	            ps.setString(3, location);
-	            ps.setInt(4, curator);
-	            ps.setString(5, openingHours);
-	            int rowsInserted = ps.executeUpdate();
-	            return rowsInserted > 0;
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
-	    public boolean updateGallery(int galleryId, String name, String description, String location, int curator, String openingHours) {
-	        try (Connection conn = DbConnUtil.getDBConn();
-	             PreparedStatement ps = conn.prepareStatement("UPDATE Gallery SET Name = ?, Description = ?, Location = ?, Curator = ?, OpeningHours = ? WHERE GalleryID = ?")) {
-	            ps.setString(1, name);
-	            ps.setString(2, description);
-	            ps.setString(3, location);
-	            ps.setInt(4, curator);
-	            ps.setString(5, openingHours);
-	            ps.setInt(6, galleryId);
-	            int rowsUpdated = ps.executeUpdate();
-	            return rowsUpdated > 0;
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
-	    public boolean removeGallery(int galleryId) {
-	        String sql = "DELETE FROM Gallery WHERE GalleryID = ?";
-	        try (Connection conn = DbConnUtil.getDBConn();
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	            pstmt.setInt(1, galleryId);
-	            int rowsDeleted = pstmt.executeUpdate();
-	            return rowsDeleted > 0;
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
-	    public List<Gallery> searchGalleries(String keyword) {
-	        List<Gallery> galleries = new ArrayList<>();
-	        try (Connection conn = DbConnUtil.getDBConn();
-	             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Gallery WHERE Name LIKE ? OR Description LIKE ?")) {
-	            String searchTerm = "%" + keyword + "%";
-	            ps.setString(1, searchTerm);
-	            ps.setString(2, searchTerm);
-	            try (ResultSet rs = ps.executeQuery()) {
-	                while (rs.next()) {
-	                    Gallery gallery = new Gallery();
-	                    gallery.setGalleryID(rs.getInt("GalleryID"));
-	                    gallery.setName(rs.getString("Name"));
-	                    gallery.setDescription(rs.getString("Description"));
-	                    gallery.setLocation(rs.getString("Location"));
-	                    gallery.setCurator(rs.getInt("Curator"));
-	                    gallery.setOpeningHours(rs.getString("OpeningHours"));
-	                    galleries.add(gallery);
-	                }
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return galleries;
-	    }
 
 
 
+    public List<Artwork> searchArtworks(String keyword) {
+        List<Artwork> artworks = new ArrayList<>();
+        try (Connection conn = DbConnUtil.getDBConn();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Artwork WHERE Title LIKE ? OR Description LIKE ?")) {
+            String searchTerm = "%" + keyword + "%";
+            ps.setString(1, searchTerm);
+            ps.setString(2, searchTerm);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Artwork artwork = new Artwork();
+                    artwork.setArtworkID(rs.getInt("ArtworkID"));
+                    artwork.setTitle(rs.getString("Title"));
+                    artwork.setDescription(rs.getString("Description"));
+                    artwork.setCreationDate(rs.getString("CreationDate"));
+                    artwork.setMedium(rs.getString("Medium"));
+                    artwork.setImageUrl(rs.getString("ImageURL"));
+              
+                    artworks.add(artwork);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artworks;
+    }
+    
+    
+    
+    //Testing Methods
 
+    public boolean addGallery(int galleryid, String name, String description, String location, int curator, String openingHours) {
+        try (Connection conn = DbConnUtil.getDBConn();
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO Gallery (GalleryID, Name, Description, Location, Curator, OpeningHours) VALUES (?, ?, ?, ?, ?, ?)")) {
+            ps.setInt(1, galleryid);
+            ps.setString(2, name);
+            ps.setString(3, description);
+            ps.setString(4, location);
+            ps.setInt(5, curator);
+            ps.setString(6, openingHours);
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean updateGallery(int galleryId, String name, String description, String location, int curator, String openingHours) {
+        try (Connection conn = DbConnUtil.getDBConn();
+             PreparedStatement ps = conn.prepareStatement("UPDATE Gallery SET Name = ?, Description = ?, Location = ?, Curator = ?, OpeningHours = ? WHERE GalleryID = ?")) {
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setInt(4, curator);
+            ps.setString(5, openingHours);
+            ps.setInt(6, galleryId);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeGallery(int galleryId) {
+        try (Connection conn = DbConnUtil.getDBConn();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM Gallery WHERE GalleryID = ?")) {
+            ps.setInt(1, galleryId);
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Gallery> searchGalleries(String keyword) {
+        List<Gallery> galleries = new ArrayList<>();
+        try (Connection conn = DbConnUtil.getDBConn();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Gallery WHERE Name LIKE ? OR Description LIKE ?")) {
+            String searchTerm = "%" + keyword + "%";
+            ps.setString(1, searchTerm);
+            ps.setString(2, searchTerm);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Gallery gallery = new Gallery();
+                    gallery.setGalleryID(rs.getInt("GalleryID"));
+                    gallery.setName(rs.getString("Name"));
+                    gallery.setDescription(rs.getString("Description"));
+                    gallery.setLocation(rs.getString("Location"));
+                    gallery.setCurator(rs.getInt("Curator"));
+                    gallery.setOpeningHours(rs.getString("OpeningHours"));
+                    galleries.add(gallery);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return galleries;
+    }
 }
+
+
+
+
+
 	  
 	

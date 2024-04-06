@@ -34,11 +34,12 @@ public interface IVirtualArtGallery {
 	
 	/**
      * Searches for artworks in the virtual art gallery based on a keyword.
+	 * @param keyword 
      *
      * @return a list of artworks that match the search keyword
      */
 	
-	public List<Artwork> searchArtworks();
+	public List<Artwork> searchArtworks(String keyword);
 	
 	
 	 /**
